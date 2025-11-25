@@ -1,0 +1,48 @@
+{
+  "name": "erp-website",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3000",
+    "deploy": "node deploy.js",
+    "test-erp": "node test-erp-connection.js",
+    "create-admin": "node create-admin.js",
+    "hash-passwords": "node hash-admin-password.js"
+  },
+  "dependencies": {
+    "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-label": "^2.1.8",
+    "@radix-ui/react-navigation-menu": "^1.2.14",
+    "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-switch": "^1.2.6",
+    "@vercel/analytics": "^1.1.1",
+    "bcryptjs": "^3.0.3",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "framer-motion": "^10.0.0",
+    "lucide-react": "^0.300.0",
+    "mongodb": "^7.0.0",
+    "mongoose": "^8.19.3",
+    "next": "^14.0.0",
+    "nodemailer": "^7.0.10",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-slick": "^0.31.0",
+    "slick-carousel": "^1.8.1",
+    "tailwind-merge": "^2.0.0",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.0.0",
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@types/react-slick": "^0.23.13",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.0",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5.0.0"
+  }
+}

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog & Insights - Retail ERP Software</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fdf6fa;
+            color: #333;
+        }
+
+        .blog-header {
+            text-align: center;
+            padding: 80px 20px 60px;
+            background: linear-gradient(135deg, #fdf6fa 0%, #ffe6f0 100%);
+        }
+
+        .blog-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 16px;
+        }
+
+        .blog-header p {
+            font-size: 1.1rem;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 80px;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 24px rgba(156, 39, 176, 0.15);
+        }
+
+        .blog-thumbnail {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #9C27B0 0%, #E91E63 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            font-weight: 700;
+        }
+
+        .blog-content {
+            padding: 24px;
+        }
+
+        .blog-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .blog-description {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: #999;
+            padding-top: 16px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .blog-date {
+            font-weight: 500;
+        }
+
+        .blog-author {
+            color: #9C27B0;
+            font-weight: 500;
+        }
+
+        .newsletter-section {
+            background: white;
+            border-radius: 16px;
+            padding: 50px 40px;
+            text-align: center;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            margin-bottom: 60px;
+        }
+
+        .newsletter-section h3 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .newsletter-section p {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 24px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 12px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 14px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            transition: border-color 0.3s;
+        }
+
+        .newsletter-input:focus {
+            outline: none;
+            border-color: #9C27B0;
+        }
+
+        .newsletter-btn {
+            padding: 14px 32px;
+            background: #9C27B0;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .newsletter-btn:hover {
+            background: #7B1FA2;
+        }
+
+        .social-section {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .social-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: #9C27B0;
+            font-size: 1.3rem;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(156, 39, 176, 0.3);
+            background: #9C27B0;
+            color: white;
+        }
+
+        @media (max-width: 992px) {
+            .blog-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .blog-header h1 {
+                font-size: 2rem;
+            }
+
+            .blog-header p {
+                font-size: 1rem;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .newsletter-section {
+                padding: 40px 24px;
+            }
+
+            .newsletter-section h3 {
+                font-size: 1.5rem;
+            }
+
+            .container {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <div class="blog-header">
+        <h1>Blog &amp; Insights</h1>
+        <p>Read the latest updates, tips, and insights for retailers and wholesalers.</p>
+    </div>
+
+    <!-- Blog Grid Section -->
+    <div class="container">
+        <div class="blog-grid">
+            <!-- Blog Card 1 -->
+            <div class="blog-card">
+                <div class="blog-thumbnail">📊</div>
+                <div class="blog-content">
+                    <h3 class="blog-title">How to Change GST TAX% in Retail ERP</h3>
+                    <p class="blog-description">Learn the step-by-step process to update GST tax percentages in your retail ERP system efficiently and accurately.</p>
+                    <div class="blog-meta">
+                        <span class="blog-date">September 15, 2025</span>
+                        <span class="blog-author">Admin</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog Card 2 -->
+            <div class="blog-card">
+                <div class="blog-thumbnail">📋</div>
+                <div class="blog-content">
+                    <h3 class="blog-title">New GST Rules 2025: What Retailers &amp; Wholesalers Need to Know</h3>
+                    <p class="blog-description">Stay updated with the latest GST regulations and compliance requirements for retail and wholesale businesses in 2025.</p>
+                    <div class="blog-meta">
+                        <span class="blog-date">September 15, 2025</span>
+                        <span class="blog-author">Admin</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog Card 3 -->
+            <div class="blog-card">
+                <div class="blog-thumbnail">🏪</div>
+                <div class="blog-content">
+                    <h3 class="blog-title">Retail Management Solutions to Streamline Your Store</h3>
+                    <p class="blog-description">Discover powerful retail management solutions that help you optimize operations and boost productivity in your store.</p>
+                    <div class="blog-meta">
+                        <span class="blog-date">June 10, 2025</span>
+                        <span class="blog-author">Admin</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog Card 4 -->
+            <div class="blog-card">
+                <div class="blog-thumbnail">💼</div>
+                <div class="blog-content">
+                    <h3 class="blog-title">A Comprehensive Guide to Choosing the Best ERP Software for Your Business</h3>
+                    <p class="blog-description">Make informed decisions with our detailed guide on selecting the perfect ERP software that fits your business needs.</p>
+                    <div class="blog-meta">
+                        <span class="blog-date">May 22, 2025</span>
+                        <span class="blog-author">Admin</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog Card 5 -->
+            <div class="blog-card">
+                <div class="blog-thumbnail">📈</div>
+                <div class="blog-content">
+                    <h3 class="blog-title">Inventory Management Best Practices for Retailers</h3>
+                    <p class="blog-description">Master inventory management with proven strategies to reduce costs and improve stock accuracy in your retail business.</p>
+                    <div class="blog-meta">
+                        <span class="blog-date">April 18, 2025</span>
+                        <span class="blog-author">Admin</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog Card 6 -->
+            <div class="blog-card">
+                <div class="blog-thumbnail">🔐</div>
+                <div class="blog-content">
+                    <h3 class="blog-title">Data Security in Retail ERP: Protecting Your Business</h3>
+                    <p class="blog-description">Understand essential security measures to protect your retail data and maintain customer trust in the digital age.</p>
+                    <div class="blog-meta">
+                        <span class="blog-date">March 30, 2025</span>
+                        <span class="blog-author">Admin</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Newsletter Section -->
+        <div class="newsletter-section">
+            <h3>Subscribe for Weekly Retail Tips</h3>
+            <p>Get the latest insights, updates, and tips delivered straight to your inbox</p>
+            <form class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
+                <button type="submit" class="newsletter-btn">Subscribe</button>
+            </form>
+        </div>
+
+        <!-- Social Icons Section -->
+        <div class="social-section">
+            <div class="social-icons">
+                <a href="#" class="social-icon" aria-label="Facebook">📘</a>
+                <a href="#" class="social-icon" aria-label="Twitter">🐦</a>
+                <a href="#" class="social-icon" aria-label="LinkedIn">💼</a>
+                <a href="#" class="social-icon" aria-label="Instagram">📷</a>
+                <a href="#" class="social-icon" aria-label="YouTube">▶️</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
