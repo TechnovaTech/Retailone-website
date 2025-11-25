@@ -91,7 +91,7 @@ export default function Testimonials() {
                 return (
                 <div
                   key={index}
-                  className="group bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-500 hover:-translate-y-2 border border-gray-100 hover:border-[#D7263D]/30 w-[400px] md:w-[450px] h-[420px] flex-shrink-0 flex flex-col"
+                  className="group bg-gradient-to-br from-white to-gray-50 p-6 rounded-2xl shadow-md hover:shadow-xl transition-all duration-500 hover:-translate-y-2 border border-gray-100 hover:border-[#D7263D]/30 w-[400px] md:w-[450px] h-[320px] flex-shrink-0 flex flex-col"
                 >
                   <div className="flex gap-1 mb-4 group-hover:scale-110 transition-transform duration-300">
                     {[...Array(5)].map((_, i) => (
