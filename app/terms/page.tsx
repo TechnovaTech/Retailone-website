@@ -1,7 +1,41 @@
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
+import { useEffect, useState } from 'react'
+
+interface Plan {
+  id: string
+  name: string
+  price: number
+  features: string[]
+  duration: string
+  isActive: boolean
+}
 
 export default function TermsAndConditions() {
+  const [plans, setPlans] = useState<Plan[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchPlans = async () => {
+      try {
+        const response = await fetch('https://erp.fashionpos.space/api/plans')
+        if (response.ok) {
+          const data = await response.json()
+          setPlans(data.filter((plan: Plan) => plan.isActive))
+        }
+      } catch (error) {
+        console.error('Failed to fetch plans:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchPlans()
+    // Refresh plans every 30 seconds for live updates
+    const interval = setInterval(fetchPlans, 30000)
+    return () => clearInterval(interval)
+  }, [])
+
   return (
     <main className="min-h-screen">
       <Navbar />
@@ -50,6 +84,38 @@ export default function TermsAndConditions() {
                   <li>Resell, distribute, or lease the Software</li>
                   <li>Use the Software for fraudulent or illegal business activities</li>
                 </ul>
+              </section>
+
+              <section className="mb-8">
+                <h2 className="text-2xl font-semibold text-gray-800 mb-4">4. SUBSCRIPTION PLANS</h2>
+                <p className="mb-4">The following subscription plans are available for the POS System:</p>
+                {loading ? (
+                  <div className="flex justify-center py-8">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#D7263D]"></div>
+                  </div>
+                ) : plans.length > 0 ? (
+                  <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mb-6">
+                    {plans.map((plan) => (
+                      <div key={plan.id} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                        <h3 className="text-lg font-semibold text-gray-800 mb-2">{plan.name}</h3>
+                        <p className="text-2xl font-bold text-[#D7263D] mb-3">₹{plan.price}<span className="text-sm text-gray-600">/{plan.duration}</span></p>
+                        <ul className="space-y-1">
+                          {plan.features.map((feature, index) => (
+                            <li key={index} className="text-sm text-gray-600 flex items-start">
+                              <span className="text-[#D7263D] mr-2">•</span>
+                              {feature}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-gray-600 italic">No active plans available at the moment.</p>
+                )}
+                <p className="text-sm text-gray-600 mt-4">
+                  * Plans and pricing are subject to change. Current active plans are displayed above and updated in real-time.
+                </p>
               </section>
 
               <section className="mb-8">

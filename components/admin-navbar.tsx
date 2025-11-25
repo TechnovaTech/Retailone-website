@@ -19,6 +19,7 @@ export default function AdminNavbar({ title = "Admin Dashboard", subtitle }: Adm
   };
 
   const navItems = [
+    { href: '/admin/plans', label: 'Plans' },
     { href: '/admin/reviews', label: 'Reviews' },
     { href: '/admin/blogs', label: 'Blogs' },
     { href: '/admin/messages', label: 'Messages' },
