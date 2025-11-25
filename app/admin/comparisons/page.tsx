@@ -294,7 +294,7 @@ export default function AdminComparisons() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <AdminNavbar title="Software Comparisons" subtitle="Manage competitive comparisons for your software" />
+      <AdminNavbar title="Comparisons" subtitle="Manage software comparisons" />
       
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
