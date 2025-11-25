@@ -11,10 +11,11 @@ const nextConfig = {
     NEXT_PUBLIC_ERP_API_KEY: process.env.NEXT_PUBLIC_ERP_API_KEY,
   },
   async rewrites() {
+    const erpApiBaseUrl = process.env.NEXT_PUBLIC_ERP_API_BASE_URL || 'https://erp.fashionpos.space';
     return [
       {
         source: '/api/erp/:path*',
-        destination: `${process.env.NEXT_PUBLIC_ERP_API_BASE_URL}/api/:path*`,
+        destination: `${erpApiBaseUrl}/api/:path*`,
       },
     ]
   },
