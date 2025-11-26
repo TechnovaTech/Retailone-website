@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 // Cache for plans data
 let plansCache = null
 let cacheTimestamp = null
-const CACHE_DURATION = 5 * 60 * 1000 // 5 minutes
+const CACHE_DURATION = 30 * 1000 // 30 seconds
 
 const fallbackPlans = [
   {
@@ -43,10 +43,12 @@ async function fetchFromERP() {
     throw new Error('ERP URL not configured')
   }
 
-  const response = await fetch(`${erpApiUrl}/api/public/plans`, {
+  const response = await fetch(`${erpApiUrl}/api/public/plans?t=${Date.now()}`, {
     headers: {
       'Content-Type': 'application/json',
-      'x-api-key': erpApiKey || ''
+      'x-api-key': erpApiKey || '',
+      'Cache-Control': 'no-cache',
+      'Pragma': 'no-cache'
     },
     cache: 'no-store'
   })

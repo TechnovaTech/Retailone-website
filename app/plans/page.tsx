@@ -28,12 +28,42 @@ export default function Plans() {
     try {
       if (forceRefresh) setRefreshing(true)
       
-      const url = forceRefresh ? '/api/plans?refresh=true' : '/api/plans'
-      const response = await fetch(url)
+      // Check cookies first
+      if (!forceRefresh) {
+        const cookies = document.cookie.split(';')
+        const plansCookie = cookies.find(c => c.trim().startsWith('plans_cache='))
+        const timeCookie = cookies.find(c => c.trim().startsWith('plans_cache_time='))
+        
+        if (plansCookie && timeCookie) {
+          const cacheTime = parseInt(timeCookie.split('=')[1])
+          const age = Date.now() - cacheTime
+          if (age < 2 * 60 * 1000) { // 2 minutes
+            const cachedPlans = JSON.parse(decodeURIComponent(plansCookie.split('=')[1]))
+            setPlans(cachedPlans)
+            setLastUpdated(new Date(cacheTime))
+            setLoading(false)
+            return
+          }
+        }
+      }
+      
+      const url = forceRefresh ? '/api/plans?refresh=true&t=' + Date.now() : '/api/plans?t=' + Date.now()
+      const response = await fetch(url, {
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache'
+        }
+      })
       const data = await response.json()
+      
+      // Store in cookies
+      const now = Date.now()
+      document.cookie = `plans_cache=${encodeURIComponent(JSON.stringify(data))}; max-age=300; path=/`
+      document.cookie = `plans_cache_time=${now}; max-age=300; path=/`
       
       setPlans(data)
       setLastUpdated(new Date())
+      console.log('Plans updated:', data.length, 'plans')
     } catch (error) {
       console.error('Error fetching plans:', error)
     } finally {
@@ -45,12 +75,34 @@ export default function Plans() {
   useEffect(() => {
     fetchPlans()
     
-    // Auto-refresh every 10 minutes
+    // Auto-refresh every 30 seconds for real-time updates
     const interval = setInterval(() => {
-      fetchPlans()
-    }, 10 * 60 * 1000)
+      fetchPlans(true)
+    }, 30 * 1000)
     
-    return () => clearInterval(interval)
+    // Listen for storage changes (real-time updates)
+    const handleStorageChange = (e) => {
+      if (e.key === 'plans_updated') {
+        console.log('Plans updated via webhook, refreshing...')
+        fetchPlans(true)
+      }
+    }
+    
+    window.addEventListener('storage', handleStorageChange)
+    
+    // Listen for custom events
+    const handlePlansUpdate = () => {
+      console.log('Plans update event received')
+      fetchPlans(true)
+    }
+    
+    window.addEventListener('plans-updated', handlePlansUpdate)
+    
+    return () => {
+      clearInterval(interval)
+      window.removeEventListener('storage', handleStorageChange)
+      window.removeEventListener('plans-updated', handlePlansUpdate)
+    }
   }, [fetchPlans])
 
   return (

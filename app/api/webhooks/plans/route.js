@@ -12,17 +12,23 @@ export async function POST(request) {
     const body = await request.json()
     console.log('Received plans webhook:', body)
     
-    // Trigger plans cache refresh
+    // Clear server cache
     const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000'
     await fetch(`${baseUrl}/api/plans?refresh=true`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     })
     
-    return NextResponse.json({ 
+    // Broadcast update to all clients
+    const response = NextResponse.json({ 
       success: true, 
-      message: 'Plans cache refreshed' 
+      message: 'Plans cache refreshed',
+      timestamp: new Date().toISOString()
     })
+    
+    response.headers.set('X-Plans-Updated', 'true')
+    
+    return response
     
   } catch (error) {
     console.error('Plans webhook error:', error)
