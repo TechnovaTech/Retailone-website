@@ -194,15 +194,7 @@ export async function GET(request) {
     
   } catch (error) {
     console.log('Error fetching from ERP:', error.message)
-    
-    // Return cached data if available
-    if (plansCache) {
-      console.log('Returning cached plans due to ERP error')
-      return NextResponse.json(plansCache)
-    }
-    
-    console.log('Using fallback plans')
-    return NextResponse.json(fallbackPlans)
+    return NextResponse.json({ error: 'Failed to fetch plans from ERP' }, { status: 500 })
   }
 }
 
