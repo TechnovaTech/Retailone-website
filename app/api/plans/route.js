@@ -84,6 +84,9 @@ async function fetchFromERP() {
     throw new Error('ERP URL not configured')
   }
 
+  const controller = new AbortController()
+  const timeoutId = setTimeout(() => controller.abort(), 30000) // 30 second timeout
+  
   const response = await fetch(`${erpApiUrl}/api/public/plans?t=${Date.now()}`, {
     headers: {
       'Content-Type': 'application/json',
@@ -91,8 +94,11 @@ async function fetchFromERP() {
       'Cache-Control': 'no-cache',
       'Pragma': 'no-cache'
     },
-    cache: 'no-store'
+    cache: 'no-store',
+    signal: controller.signal
   })
+  
+  clearTimeout(timeoutId)
 
   if (!response.ok) {
     throw new Error(`ERP API returned status: ${response.status}`)
