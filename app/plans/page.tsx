@@ -56,7 +56,16 @@ export default function Plans() {
           'Pragma': 'no-cache'
         }
       })
+      
+      if (!response.ok) {
+        throw new Error(`API returned ${response.status}`)
+      }
+      
       const data = await response.json()
+      
+      if (!Array.isArray(data)) {
+        throw new Error('Invalid data format from API')
+      }
       
       // Store in cookies
       const now = Date.now()
@@ -68,6 +77,7 @@ export default function Plans() {
       console.log('Plans updated:', data.length, 'plans')
     } catch (error) {
       console.error('Error fetching plans:', error)
+      setPlans([])
     } finally {
       setLoading(false)
       setRefreshing(false)
@@ -132,6 +142,13 @@ export default function Plans() {
           {loading ? (
             <div className="flex justify-center items-center py-20">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#D7263D]"></div>
+            </div>
+          ) : plans.length === 0 ? (
+            <div className="flex justify-center items-center py-20">
+              <div className="text-center">
+                <p className="text-xl text-gray-600 mb-4">Unable to load plans</p>
+                <p className="text-gray-500">Please try again later or contact support</p>
+              </div>
             </div>
           ) : (
             <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
