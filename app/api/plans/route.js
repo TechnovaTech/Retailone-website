@@ -201,9 +201,9 @@ export async function GET(request) {
       return NextResponse.json(plansCache)
     }
     
-    // Minimal fallback to prevent site breaking
-    console.log('Using minimal fallback')
-    return NextResponse.json([])
+    // Use fallback plans when ERP is down
+    console.log('Using fallback plans - ERP not available')
+    return NextResponse.json(fallbackPlans)
   }
 }
 
