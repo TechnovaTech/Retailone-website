@@ -1,8 +1,16 @@
 "use client"
 
 import { MessageCircle } from "lucide-react"
+import { usePathname } from "next/navigation"
 
 export default function WhatsAppSidebar() {
+  const pathname = usePathname()
+  
+  // Hide WhatsApp button on admin pages
+  if (pathname?.startsWith('/admin')) {
+    return null
+  }
+
   const handleWhatsAppClick = () => {
     const phoneNumber = "919427300816"
     const message = "Hello! I'm interested in Retalians. Can you help me?"

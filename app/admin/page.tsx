@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Search, Plus, Edit, Trash2, Star, MessageSquare, Users, TrendingUp, Mail, Phone, Calendar, Lock, LogOut, Eye, EyeOff } from "lucide-react"
 import Link from "next/link"
+import AdminNavbar from "@/components/admin-navbar"
 
 interface Review {
   _id: string
@@ -155,12 +156,7 @@ export default function AdminPage() {
     }
   }
 
-  const handleLogout = () => {
-    localStorage.removeItem("adminLoggedIn")
-    setIsLoggedIn(false)
-    setEmail("")
-    setPassword("")
-  }
+
 
   const fetchReviews = async () => {
     try {
@@ -384,46 +380,7 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center py-4 lg:py-6 gap-4">
-            <div className="text-center lg:text-left">
-              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-              <p className="text-gray-600 text-sm lg:text-base">Manage reviews and blog posts</p>
-            </div>
-            <div className="flex flex-wrap justify-center lg:justify-end gap-1 sm:gap-2 lg:gap-4 items-center">
-              <Link href="/admin/reviews" className="px-2 py-1 sm:px-3 sm:py-2 text-xs sm:text-sm lg:px-4 lg:text-base rounded-lg font-medium bg-white text-gray-700 hover:bg-gray-100 border">
-                Reviews
-              </Link>
-              <Link href="/admin/blogs" className="px-2 py-1 sm:px-3 sm:py-2 text-xs sm:text-sm lg:px-4 lg:text-base rounded-lg font-medium bg-white text-gray-700 hover:bg-gray-100 border">
-                Blogs
-              </Link>
-              <Link href="/admin/messages" className="px-2 py-1 sm:px-3 sm:py-2 text-xs sm:text-sm lg:px-4 lg:text-base rounded-lg font-medium bg-white text-gray-700 hover:bg-gray-100 border">
-                Messages
-              </Link>
-              <Link href="/admin/services" className="px-2 py-1 sm:px-3 sm:py-2 text-xs sm:text-sm lg:px-4 lg:text-base rounded-lg font-medium bg-white text-gray-700 hover:bg-gray-100 border">
-                Services
-              </Link>
-              <Link href="/admin/about" className="px-2 py-1 sm:px-3 sm:py-2 text-xs sm:text-sm lg:px-4 lg:text-base rounded-lg font-medium bg-white text-gray-700 hover:bg-gray-100 border">
-                About
-              </Link>
-              <Link href="/admin/social-media" className="px-2 py-1 sm:px-3 sm:py-2 text-xs sm:text-sm lg:px-4 lg:text-base rounded-lg font-medium bg-white text-gray-700 hover:bg-gray-100 border">
-                Social
-              </Link>
-              <Link href="/admin/comparisons" className="px-2 py-1 sm:px-3 sm:py-2 text-xs sm:text-sm lg:px-4 lg:text-base rounded-lg font-medium bg-white text-gray-700 hover:bg-gray-100 border">
-                Comparisons
-              </Link>
-              <Button 
-                onClick={handleLogout}
-                className="bg-red-600 hover:bg-red-700 text-white flex items-center gap-1 lg:gap-2 px-2 py-1 sm:px-3 sm:py-2 text-xs sm:text-sm lg:px-4 lg:text-base"
-              >
-                <LogOut className="w-3 h-3 lg:w-4 lg:h-4" />
-                <span className="hidden sm:inline">Logout</span>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <AdminNavbar title="Admin Dashboard" subtitle="Manage reviews and blog posts" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <div className="text-center">

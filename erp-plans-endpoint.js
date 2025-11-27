@@ -15,7 +15,33 @@ export async function GET(request) {
     const { db } = await connectToDatabase()
     
     // Fetch plans from your ERP database
-    const plans = await db.collection('plans').find({ active: true }).toArray()
+    let plans = await db.collection('plans').find({ active: true }).toArray()
+    
+    // If no plans in database, use default plans
+    if (!plans || plans.length === 0) {
+      plans = [
+        {
+          _id: 'retalians-standard',
+          name: 'Retalians Standard',
+          price: 3199,
+          description: 'Perfect for your business needs',
+          maxProducts: 500,
+          durationDays: 1095,
+          allowedFeatures: [
+            'Business Overview',
+            'Inventory Management',
+            'Purchase Orders',
+            'Customer Management',
+            'Point of Sale (POS)',
+            'Bills & Invoicing',
+            'Staff Management',
+            'Commission Management'
+          ],
+          active: true,
+          sortOrder: 1
+        }
+      ]
+    }
     
     // Format for website
     const formattedPlans = plans.map(plan => ({
@@ -25,12 +51,14 @@ export async function GET(request) {
       description: plan.description,
       maxProducts: plan.maxProducts,
       durationDays: plan.durationDays || 365,
-      features: plan.features || []
+      features: plan.allowedFeatures || plan.features || [],
+      isActive: plan.active !== false,
+      sortOrder: plan.sortOrder || 0
     }))
 
     return NextResponse.json({
       success: true,
-      data: formattedPlans
+      data: formattedPlans.filter(plan => plan.isActive).sort((a, b) => a.sortOrder - b.sortOrder)
     })
   } catch (error) {
     return NextResponse.json({ 

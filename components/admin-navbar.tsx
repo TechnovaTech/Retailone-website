@@ -37,12 +37,12 @@ export default function AdminNavbar({ title = "Admin Dashboard", subtitle }: Adm
             <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900">{title}</h1>
             {subtitle && <p className="text-gray-600 text-sm lg:text-base">{subtitle}</p>}
           </div>
-          <div className="flex flex-wrap justify-center lg:justify-end gap-1 sm:gap-2 lg:gap-4 items-center">
+          <div className="flex flex-wrap justify-center lg:justify-end gap-2 items-center">
             {navItems.map((item) => (
               <Link 
                 key={item.href}
                 href={item.href} 
-                className={`px-2 py-1 sm:px-3 sm:py-2 text-xs sm:text-sm lg:px-4 lg:text-base rounded-lg font-medium border transition-colors ${
+                className={`px-3 py-2 text-sm rounded-lg font-medium border transition-colors whitespace-nowrap ${
                   pathname === item.href
                     ? 'bg-[#D7263D] text-white hover:bg-[#B91C3C] border-[#D7263D]'
                     : 'bg-white text-gray-700 hover:bg-gray-100 border-gray-200'
@@ -53,7 +53,7 @@ export default function AdminNavbar({ title = "Admin Dashboard", subtitle }: Adm
             ))}
             <Button 
               onClick={handleLogout}
-              className="bg-red-600 hover:bg-red-700 text-white flex items-center gap-1 lg:gap-2 px-2 py-1 sm:px-3 sm:py-2 text-xs sm:text-sm lg:px-4 lg:text-base"
+              className="bg-red-600 hover:bg-red-700 text-white flex items-center gap-2 px-3 py-2 text-sm rounded-lg whitespace-nowrap"
             >
               <LogOut className="w-3 h-3 lg:w-4 lg:h-4" />
               <span className="hidden sm:inline">Logout</span>

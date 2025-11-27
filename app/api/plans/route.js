@@ -7,31 +7,72 @@ const CACHE_DURATION = 30 * 1000 // 30 seconds
 
 const fallbackPlans = [
   {
-    id: 'basic',
-    name: 'Basic Plan',
-    price: 5000,
-    description: 'Perfect for small businesses',
-    maxProducts: 100,
-    durationDays: 365,
-    features: ['Inventory Management', 'Basic Reporting', 'Customer Management']
-  },
-  {
-    id: 'pro',
-    name: 'Professional Plan',
-    price: 12000,
-    description: 'Ideal for growing businesses',
+    id: 'retalians-standard',
+    name: 'Retalians Standard',
+    price: 3199,
+    description: 'Perfect for your business needs',
     maxProducts: 500,
-    durationDays: 365,
-    features: ['Advanced Inventory', 'Analytics', 'Multi-location Support']
+    durationDays: 1095,
+    features: [
+      'Business Overview',
+      'Inventory Management',
+      'Purchase Orders',
+      'Customer Management',
+      'Point of Sale (POS)',
+      'Bills & Invoicing',
+      'Staff Management',
+      'Commission Management'
+    ],
+    isActive: true,
+    sortOrder: 1
   },
   {
-    id: 'enterprise',
-    name: 'Enterprise Plan',
-    price: 25000,
-    description: 'Complete solution for large businesses',
+    id: 'retalians-pro',
+    name: 'Retalians Pro',
+    price: 7999,
+    description: 'Advanced features for growing businesses',
+    maxProducts: 2000,
+    durationDays: 365,
+    features: [
+      'Everything in Standard Plan',
+      'Advanced Analytics & Insights',
+      'Multi-store Management',
+      'Employee Management System',
+      'Advanced Reporting Dashboard',
+      'API Integration Support',
+      'Custom Fields & Categories',
+      'Loyalty Program Management',
+      'Supplier Management',
+      'Advanced Security Features',
+      'Data Export & Backup',
+      'Priority Customer Support'
+    ],
+    isActive: true,
+    sortOrder: 2
+  },
+  {
+    id: 'retalians-enterprise',
+    name: 'Retalians Enterprise',
+    price: 15999,
+    description: 'Complete solution for large enterprises',
     maxProducts: -1,
     durationDays: 365,
-    features: ['Unlimited Products', 'Custom Integrations', '24/7 Support']
+    features: [
+      'Everything in Pro Plan',
+      'Unlimited Products & Locations',
+      'Custom Integrations',
+      'White-label Solutions',
+      'Advanced User Permissions',
+      'Custom Workflow Automation',
+      'Dedicated Account Manager',
+      '24/7 Priority Support',
+      'Custom Training Sessions',
+      'Advanced Security & Compliance',
+      'Custom Reports & Dashboards',
+      'Enterprise-grade Infrastructure'
+    ],
+    isActive: true,
+    sortOrder: 3
   }
 ]
 
@@ -63,17 +104,64 @@ async function fetchFromERP() {
     throw new Error('Invalid ERP response format')
   }
 
-  return result.data.map(plan => ({
-    id: plan._id || plan.id,
-    name: plan.name,
-    price: plan.price,
-    description: plan.description || `${plan.name} - Perfect for your business needs`,
-    maxProducts: plan.maxProducts === -1 ? 'Unlimited' : plan.maxProducts,
-    durationDays: plan.durationDays || 365,
-    features: plan.allowedFeatures || plan.features || [],
-    isActive: plan.isActive !== false,
-    sortOrder: plan.sortOrder || 0
-  })).filter(plan => plan.isActive).sort((a, b) => a.sortOrder - b.sortOrder)
+  return result.data.map(plan => {
+    let features = plan.allowedFeatures || plan.features || []
+    
+    // Fix concatenated features from ERP
+    if (typeof features === 'string') {
+      features = features.split(/(?=[A-Z])/).filter(f => f.length > 0)
+    }
+    
+    // Map basic features to professional names
+    const featureMap = {
+      'inventory': 'Inventory Management',
+      'pos': 'Inventory Management',
+      'customers': 'Customer Management',
+      'customerlist': 'Customer Management',
+      'bills': 'Bills & Purchase Records',
+      'bill': 'Bills & Purchase Records',
+      'purchases': 'Bills & Purchase Records',
+      'purchase': 'Bills & Purchase Records',
+      'hr': 'HR & Staff Management',
+      'staff': 'HR & Staff Management',
+      'commission': 'HR & Staff Management',
+      'salary': 'HR & Staff Management',
+      'leaves': 'HR & Staff Management',
+      'dashboard': 'Reports & Analysis',
+      'analysis': 'Reports & Analysis',
+      'reports': 'Reports & Analysis',
+      'expense': 'Expense Tracking',
+      'expenses': 'Expense Tracking',
+      'service': '24/7 Support & Alerts',
+      'support': '24/7 Support & Alerts',
+      'alerts': '24/7 Support & Alerts',
+      'multilingual': '24/7 Support & Alerts',
+      'settings':'Customize Settings',
+      'whatsapp':'Customize Settings',
+      'referrals':'Customize Settings',
+      'dropdownsettings':'Customize Settings',
+    }
+    
+    const mappedFeatures = features.map(f => {
+      const key = f.toLowerCase().trim()
+      return featureMap[key] || f
+    })
+    
+    // Remove duplicates
+    const uniqueFeatures = [...new Set(mappedFeatures)]
+    
+    return {
+      id: plan._id || plan.id,
+      name: plan.name,
+      price: plan.price,
+      description: plan.description || `Perfect for your business needs`,
+      maxProducts: plan.maxProducts === -1 ? 'Unlimited' : plan.maxProducts,
+      durationDays: plan.durationDays || 365,
+      features: uniqueFeatures,
+      isActive: plan.isActive !== false,
+      sortOrder: plan.sortOrder || 0
+    }
+  }).filter(plan => plan.isActive).sort((a, b) => a.sortOrder - b.sortOrder)
 }
 
 export async function GET(request) {

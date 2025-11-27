@@ -1,19 +1,36 @@
 "use client"
 
+// Custom CSS for hiding scrollbar and removing focus styles
+const customStyles = `
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  button:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+`
+
 import { motion } from "framer-motion"
-import { Check, RefreshCw } from "lucide-react"
+import { Check, RefreshCw, X } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState, useCallback } from "react"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import SoftwareComparison from "@/components/software-comparison"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 
 interface Plan {
   id: string
   name: string
   price: number
   description: string
-  maxProducts: number
+  maxProducts: number | string
   durationDays: number
   features: string[]
 }
@@ -23,31 +40,16 @@ export default function Plans() {
   const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
+  const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const fetchPlans = useCallback(async (forceRefresh = false) => {
     try {
       if (forceRefresh) setRefreshing(true)
       
-      // Check cookies first
-      if (!forceRefresh) {
-        const cookies = document.cookie.split(';')
-        const plansCookie = cookies.find(c => c.trim().startsWith('plans_cache='))
-        const timeCookie = cookies.find(c => c.trim().startsWith('plans_cache_time='))
-        
-        if (plansCookie && timeCookie) {
-          const cacheTime = parseInt(timeCookie.split('=')[1])
-          const age = Date.now() - cacheTime
-          if (age < 2 * 60 * 1000) { // 2 minutes
-            const cachedPlans = JSON.parse(decodeURIComponent(plansCookie.split('=')[1]))
-            setPlans(cachedPlans)
-            setLastUpdated(new Date(cacheTime))
-            setLoading(false)
-            return
-          }
-        }
-      }
+      // Skip cache for now to ensure fresh data
       
-      const url = forceRefresh ? '/api/plans?refresh=true&t=' + Date.now() : '/api/plans?t=' + Date.now()
+      const url = '/api/plans?refresh=true&t=' + Date.now()
       const response = await fetch(url, {
         headers: {
           'Cache-Control': 'no-cache',
@@ -81,7 +83,7 @@ export default function Plans() {
     }, 30 * 1000)
     
     // Listen for storage changes (real-time updates)
-    const handleStorageChange = (e) => {
+    const handleStorageChange = (e: StorageEvent) => {
       if (e.key === 'plans_updated') {
         console.log('Plans updated via webhook, refreshing...')
         fetchPlans(true)
@@ -107,6 +109,7 @@ export default function Plans() {
 
   return (
     <main>
+      <style dangerouslySetInnerHTML={{ __html: customStyles }} />
       <Navbar />
       <section className="pt-32 pb-16 px-6 lg:px-8 bg-gradient-to-br from-[#fef2f2] to-[#fee2e2] relative overflow-hidden mb-16">
         <div className="absolute inset-0 bg-red-900/5"></div>
@@ -117,21 +120,8 @@ export default function Plans() {
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <h1 className="text-5xl font-bold text-gray-900 mb-6">Our <span className="bg-gradient-to-r from-[#D7263D] to-[#F03A47] bg-clip-text text-transparent">Plans</span></h1>
-            <p className="text-xl text-gray-600 mb-4">Choose the perfect plan for your business. </p>
-            <div className="flex items-center justify-center gap-4 text-sm text-gray-500">
-              <span>Plans updated live from ERP system</span>
-              <button 
-                onClick={() => fetchPlans(true)}
-                disabled={refreshing}
-                className="flex items-center gap-1 px-3 py-1 rounded-full bg-white/50 hover:bg-white/70 transition-colors disabled:opacity-50"
-              >
-                <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} />
-                Refresh
-              </button>
-              {lastUpdated && (
-                <span>Last updated: {lastUpdated.toLocaleTimeString()}</span>
-              )}
-            </div>
+            <p className="text-xl text-gray-600 mb-4">Choose the perfect plan for your retail business needs.</p>
+           
           </motion.div>
         </div>
       </section>
@@ -152,14 +142,17 @@ export default function Plans() {
                   animate={{ opacity: 1, y: 0 }} 
                   transition={{ delay: idx * 0.1 }} 
                   whileHover={{ y: -8 }} 
-                  className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all border border-gray-200 h-[600px] flex flex-col"
+                  className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all border border-gray-200 min-h-[650px] flex flex-col cursor-pointer"
+                  onClick={() => {
+                    setSelectedPlan(plan)
+                    setIsModalOpen(true)
+                  }}
                 >
                   <div className="text-center mb-6">
                     <h2 className="text-2xl font-bold text-gray-900 mb-2">{plan.name}</h2>
-                    <p className="text-gray-600 mb-4 h-12 flex items-center justify-center">{plan.description}</p>
+                    <p className="text-gray-600 mb-4 min-h-[48px] flex items-center justify-center text-center">{plan.description}</p>
                     <div className="mb-4">
                       <span className="text-5xl font-bold text-gray-900">₹{plan.price}</span>
-                      <span className="text-gray-600">/year</span>
                     </div>
                   </div>
                   
@@ -167,23 +160,29 @@ export default function Plans() {
                     <ul className="space-y-3 mb-6">
                       <li className="flex items-start gap-3 text-gray-700">
                         <Check className="w-5 h-5 text-[#D7263D] flex-shrink-0 mt-0.5" />
-                        <span>Up to {plan.maxProducts === 'Unlimited' ? 'Unlimited' : plan.maxProducts} products</span>
+                        <span>Up to {plan.maxProducts === -1 || plan.maxProducts === 'Unlimited' ? 'Unlimited' : plan.maxProducts} products</span>
                       </li>
                       <li className="flex items-start gap-3 text-gray-700">
                         <Check className="w-5 h-5 text-[#D7263D] flex-shrink-0 mt-0.5" />
                         <span>{plan.durationDays} days validity</span>
                       </li>
-                      {plan.features?.slice(0, 6).map((feature: string, i: number) => (
+                      {plan.features?.slice(0, 8).map((feature: string, i: number) => (
                         <li key={i} className="flex items-start gap-3 text-gray-700">
-                          <Check className="w-5 h-5 text-[#D7263D] flex-shrink-0 mt-0.5" />
+                          <Check className="w-4 h-4 text-[#D7263D] flex-shrink-0 mt-0.5" />
                           <span>{feature}</span>
                         </li>
                       ))}
+                      {plan.features?.length > 8 && (
+                        <li className="flex items-start gap-3 text-gray-500 italic">
+                          <span className="w-4 h-4 flex-shrink-0">+</span>
+                          <span>{plan.features.length - 8} more features...</span>
+                        </li>
+                      )}
                     </ul>
                   </div>
                   
                   <Link 
-                    href="/contact" 
+                    href="/contact"
                     className="block w-full py-3 rounded-full text-center font-semibold transition-all mt-auto bg-gradient-to-r from-[#D7263D] to-[#F03A47] text-white hover:shadow-lg"
                   >
                     Get Started
@@ -196,6 +195,46 @@ export default function Plans() {
       </section>
       
       <SoftwareComparison />
+      
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto scrollbar-hide">
+          {selectedPlan && (
+            <div className="p-6">
+              <div className="text-center mb-8">
+                <h2 className="text-4xl font-bold text-gray-900 mb-3">{selectedPlan.name}</h2>
+                <p className="text-xl text-gray-600 mb-6">{selectedPlan.description}</p>
+                <div className="space-y-3">
+                  <div className="text-lg font-semibold">₹{selectedPlan.price}/year</div>
+                  <div className="text-lg">Up to {selectedPlan.maxProducts === -1 || selectedPlan.maxProducts === 'Unlimited' ? 'Unlimited' : selectedPlan.maxProducts} products</div>
+                  <div className="text-lg">{selectedPlan.durationDays} days validity</div>
+                </div>
+              </div>
+              
+              <div className="mb-8">
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">Features Included</h3>
+                <div className="grid md:grid-cols-2 gap-4">
+                  {selectedPlan.features.map((feature, i) => (
+                    <div key={i} className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg">
+                      <Check className="w-5 h-5 text-[#D7263D] flex-shrink-0 mt-0.5" />
+                      <span className="font-medium text-gray-800">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="flex gap-4">
+                <Link 
+                  href="/contact" 
+                  className="flex-1 py-4 rounded-xl text-center font-bold text-lg bg-gradient-to-r from-[#D7263D] to-[#F03A47] text-white hover:shadow-xl transition-all"
+                  onClick={() => setIsModalOpen(false)}
+                >
+                  Get Started Now
+                </Link>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
       
       <Footer />
     </main>
