@@ -47,6 +47,14 @@ export default function Navbar() {
             >
                Get in Touch
             </Link>
+            <a
+              href="https://drive.google.com/file/d/1CzcX13MMaU74XUFmJVJ00iNlRT5BFYZa/view?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:inline-flex items-center gap-2 px-6 py-3 border border-[#D7263D] text-[#D7263D] rounded-full hover:bg-[#D7263D] hover:text-white transition-all duration-300 text-sm font-bold"
+            >
+              Download App
+            </a>
 
             {/* Mobile Menu Button */}
             <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-gray-700">
@@ -75,6 +83,15 @@ export default function Navbar() {
             >
               Get in Touch
             </Link>
+            <a
+              href="https://drive.google.com/file/d/1CzcX13MMaU74XUFmJVJ00iNlRT5BFYZa/view?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block px-4 py-3 mt-3 border border-[#D7263D] text-[#D7263D] rounded-full text-center hover:bg-[#D7263D] hover:text-white transition-all duration-300 font-bold"
+              onClick={() => setIsOpen(false)}
+            >
+              Download App
+            </a>
           </motion.div>
         )}
       </div>
