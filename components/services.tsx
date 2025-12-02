@@ -12,8 +12,6 @@ export default function Services() {
   const services = [
     { icon: ShoppingBasket, title: "Grocery & Supermarket" },
     { icon: Car, title: "Autoparts & Accessories" },
-    { icon: Scissors, title: "Spas & Salons" },
-    { icon: Dumbbell, title: "Gym & Sporting" },
     { icon: PawPrint, title: "Pet Shops" },
     { icon: MonitorSmartphone, title: "Consumer Electronics" },
     { icon: Gift, title: "Gifting & Stationery" },
@@ -22,9 +20,7 @@ export default function Services() {
     { icon: Sofa, title: "Furniture & Home Decor" },
     { icon: ShoppingCart, title: "Footwear & Accessories" },
     { icon: Gem, title: "Jewelry & Watches" },
-    { icon: Truck, title: "Courier & Logistics" },
     { icon: ShoppingBag, title: "Luxury Boutiques" },
-    { icon: Luggage, title: "Travel & Luggage" },
     { icon: Smartphone, title: "Mobile & Computer Stores" },
     { icon: Wrench, title: "Hardware & Tools" },
     { icon: Watch, title: "Watches" },
