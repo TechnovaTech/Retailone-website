@@ -55,7 +55,7 @@ export default function Hero() {
           <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight px-2">
             A <span className="bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent">360°</span> Retail Solution
             <br className="hidden xs:block" />
-            <span className="xs:hidden"> </span>by the Retailone, for the <span className="text-white">Retailers</span> 
+            <span className="xs:hidden"> </span>by the Retailians, for the <span className="text-white">Retailers</span> 
           </h1>
         </motion.div>
 

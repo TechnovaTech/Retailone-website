@@ -28,9 +28,9 @@ export default function Footer() {
           {/* Company Info */}
           <div>
             <Link href="/" className="text-white font-bold text-lg mb-4 block hover:text-gray-300 transition-colors">
-              Retailone
+              Retailians
             </Link>
-            <p className="text-sm mb-4">A 360° Retail Solution by the Retailone, for the Retailers.</p>
+            <p className="text-sm mb-4">A 360° Retail Solution by the Retailians, for the Retailers.</p>
             <div className="space-y-3">
               <div className="flex items-start gap-2">
                 <Mail size={16} className="mt-1 flex-shrink-0 cursor-pointer" />
@@ -150,7 +150,7 @@ export default function Footer() {
         <div className="py-8" style={{borderTop: '1px solid #D1D1D1'}}>
           <div className="flex justify-center items-center">
             <p className="text-sm text-center text-gray-400">
-              © 2025 All rights reserved By Retailone.
+              © 2025 All rights reserved By Retailians.
             </p>
           </div>
         </div>

@@ -5,24 +5,24 @@ import { ChevronDown, ChevronUp } from "lucide-react"
 
 const faqs = [
   {
-    question: "What is Retailone?",
-    answer: "Retailone is a comprehensive 360° retail solution designed by retailers, for retailers. It provides complete business management tools for retail and wholesale operations."
+    question: "What is Retailians?",
+    answer: "Retailians is a comprehensive 360° retail solution designed by retailers, for retailers. It provides complete business management tools for retail and wholesale operations."
   },
   {
-    question: "How can I get started with Retailone?",
+    question: "How can I get started with Retailians?",
     answer: "You can get started by contacting our sales team to learn more about our features, request a demo, or schedule a consultation."
   },
   {
-    question: "What industries does Retailone serve?",
-    answer: "Retailone serves various retail industries including fashion, electronics, grocery, pharmacy, and many other retail segments with specialized features for each."
+    question: "What industries does Retailians serve?",
+    answer: "Retailians serves various retail industries including fashion, electronics, grocery, pharmacy, and many other retail segments with specialized features for each."
   },
   {
     question: "Is there a free trial available?",
-    answer: "Yes, we offer a free trial so you can experience all the features of Retailone. Contact us to sign up for your trial."
+    answer: "Yes, we offer a free trial so you can experience all the features of Retailians. Contact us to sign up for your trial."
   },
   {
     question: "What support options are available?",
-    answer: "We provide comprehensive support including phone support, email assistance, online documentation, and training resources to ensure your success with Retailone."
+    answer: "We provide comprehensive support including phone support, email assistance, online documentation, and training resources to ensure your success with Retailians."
   }
 ]
 
@@ -44,7 +44,7 @@ export default function FAQ() {
                
             </h2>
             <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8">
-              Find answers to common questions about Retailone, ERP system, including features, setup, and best practices.
+              Find answers to common questions about Retailians, ERP system, including features, setup, and best practices.
             </p>
           </div>
 

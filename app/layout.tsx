@@ -6,9 +6,9 @@ import WhatsAppSidebar from "@/components/whatsapp-sidebar"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "Retailone-website",
+  title: "Retailians-website",
   description:
-    "A 360° Retail Solution by the Retailone, for the Retailers. Manage multiple operations of your business using our ERP Software.",
+    "A 360° Retail Solution by the Retailians, for the Retailers. Manage multiple operations of your business using our ERP Software.",
   generator: "v0.app",
 }
 

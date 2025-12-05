@@ -44,7 +44,7 @@ export default function Company() {
         </div>
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <h1 className="text-5xl font-bold text-gray-900 mb-6">About <span className="bg-gradient-to-r from-[#D7263D] to-[#F03A47] bg-clip-text text-transparent">Retailone</span></h1>
+            <h1 className="text-5xl font-bold text-gray-900 mb-6">About <span className="bg-gradient-to-r from-[#D7263D] to-[#F03A47] bg-clip-text text-transparent">Retailians</span></h1>
             <p className="text-xl text-gray-600 mb-8">
               We help retail businesses grow with simple and powerful software solutions.
             </p>
@@ -58,7 +58,7 @@ export default function Company() {
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">Who <span className="bg-gradient-to-r from-[#D7263D] to-[#F03A47] bg-clip-text text-transparent">We Are</span></h2>
             <p className="text-lg text-gray-600 leading-relaxed mb-6">
-              Retailone is a leading retail management software company serving thousands of businesses across India, UAE, and Africa. We make retail operations simple, efficient, and profitable.
+              Retailians is a leading retail management software company serving thousands of businesses across India, UAE, and Africa. We make retail operations simple, efficient, and profitable.
             </p>
             <p className="text-lg text-gray-600 leading-relaxed">
               Our mission is to empower retail business owners with technology that helps them grow their business and serve their customers better.

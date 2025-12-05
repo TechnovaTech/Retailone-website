@@ -66,7 +66,7 @@ export default function Contact() {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <h1 className="text-5xl font-bold text-gray-900 mb-6">Contact <span className="bg-gradient-to-r from-[#D7263D] to-[#F03A47] bg-clip-text text-transparent">Us</span></h1>
             <p className="text-xl text-gray-600 mb-8">
-              Get in touch with our team. We're here to help you with any questions about Retailone.
+              Get in touch with our team. We're here to help you with any questions about Retailians.
             </p>
           </motion.div>
         </div>

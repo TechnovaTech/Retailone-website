@@ -24,13 +24,13 @@ export default function Home() {
         <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 p-4">
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md">
             <div className="flex items-center justify-between p-6 border-b">
-              <h2 className="text-xl font-bold text-gray-900">Download RetailOne Android App</h2>
+              <h2 className="text-xl font-bold text-gray-900">Download Retailians Android App</h2>
               <button aria-label="Close" onClick={() => setShowPopup(false)} className="text-gray-500 hover:text-gray-700">
                 <X className="w-6 h-6" />
               </button>
             </div>
             <div className="p-6 space-y-4">
-              <p className="text-gray-700">Get the RetailOne app for Android and manage your retail on the go.</p>
+              <p className="text-gray-700">Get the Retailians app for Android and manage your retail on the go.</p>
               <a
                 href="https://drive.google.com/file/d/1CzcX13MMaU74XUFmJVJ00iNlRT5BFYZa/view?usp=sharing"
                 target="_blank"
