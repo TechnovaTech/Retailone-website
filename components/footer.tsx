@@ -41,6 +41,9 @@ export default function Footer() {
                   <a href="mailto:madevisionstudios@gmail.com" className="hover:text-white block cursor-pointer transition-colors">
                     madevisionstudios@gmail.com
                   </a>
+                  <a href="mailto:retailianspos@gmail.com" className="hover:text-white block cursor-pointer transition-colors">
+                    retailianspos@gmail.com
+                  </a>
                 </div>
               </div>
               <div className="flex items-start gap-2">

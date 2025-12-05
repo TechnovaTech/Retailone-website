@@ -53,6 +53,11 @@ export default function Contact() {
                     madevisionstudios@gmail.com
                   </a>
                 </p>
+                <p className="font-medium break-all">
+                  <a href="mailto:retailianspos@gmail.com">
+                    retailianspos@gmail.com
+                  </a>
+                </p>
               </div>
             </div>
 
