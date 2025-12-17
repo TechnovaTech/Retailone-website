@@ -59,7 +59,7 @@ export default function Footer() {
                 <MapPin size={16} className="mt-1 flex-shrink-0" />
                 <div className="text-sm">
                   <span className="hover:text-white">
-                    312-The spire 2,150ft ring road,<br />
+                    326-The spire 2,150ft ring road,<br />
                     Rajkot, Gujarat-360005.
                   </span>
                 </div>
